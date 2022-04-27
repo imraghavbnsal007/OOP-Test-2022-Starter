@@ -139,10 +139,7 @@ public class NematodeVisualiser extends PApplet {
 			textSize(55);
 			text("NEMATODE", 250, 100);
 
-			textAlign(CORNER);
-			textSize(20);
-			String info = PresentNem.toString();
-			text(info, border * 3.0f, height - border * 3.0f);
+			
 		}
 	}
 
