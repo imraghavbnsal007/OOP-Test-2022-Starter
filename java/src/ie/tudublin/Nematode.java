@@ -1,5 +1,7 @@
 package ie.tudublin;
 
+import java.util.ArrayList;
+
 import processing.core.PApplet;
 import processing.data.TableRow;
 
@@ -73,6 +75,9 @@ public class Nematode extends PApplet{
     public String toString() {
         return "Nematode [eyes=" + eyes + ", gender=" + gender + ", length=" + length + ", limbs=" + limbs + ", name="
                 + name + "]";
+    }
+
+    public static void add(ArrayList<Nematode> nematodes) {
     }
     
 
