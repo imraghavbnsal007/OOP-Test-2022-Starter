@@ -137,7 +137,7 @@ public class NematodeVisualiser extends PApplet {
 			}
 			fill(random(255), 255, 255);
 			textSize(55);
-			text("NEMATODE", 250, 100);
+			text(PresentNem.getName(), 290, 100);
 
 			
 		}
