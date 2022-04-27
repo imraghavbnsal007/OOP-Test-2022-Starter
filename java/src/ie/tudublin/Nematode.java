@@ -1,29 +1,30 @@
 package ie.tudublin;
 
-import java.util.ArrayList;
-
 import processing.core.PApplet;
 import processing.data.TableRow;
 
 public class Nematode extends PApplet{
-    public String name;
-    public float length;
-    public boolean limbs;
-    public String gender;
-    public boolean eyes;
+    private String name;
+    private int length;
+    private boolean limbs;
+    private String gender;
+    private boolean eyes;
 
+    float cx = width/2;
+    float cy = height/2;
+    
     public Nematode(TableRow tr)
     {
         this(
-            tr.getString("Name"),
-            tr.getFloat("length"),
-            tr.getInt("limbs?") == 1 ? true : false,
+            tr.getString("name"), 
+            tr.getInt("length"),      
+            tr.getInt("limbs") == 1,
             tr.getString("gender"),
-            tr.getInt("eyes?") == 1 ? true : false
+            tr.getInt("eyes")== 1       
         );
-    }
+    }//default constructor ends
 
-    public Nematode(String name, float length, boolean limbs, String gender, boolean eyes) {
+    public Nematode(String name, int length, boolean limbs, String gender, boolean eyes) {
         this.name = name;
         this.length = length;
         this.limbs = limbs;
@@ -39,11 +40,11 @@ public class Nematode extends PApplet{
         this.name = name;
     }
 
-    public float getLength() {
+    public int getLength() {
         return length;
     }
 
-    public void setLength(float length) {
+    public void setLength(int length) {
         this.length = length;
     }
 
@@ -76,9 +77,5 @@ public class Nematode extends PApplet{
         return "Nematode [eyes=" + eyes + ", gender=" + gender + ", length=" + length + ", limbs=" + limbs + ", name="
                 + name + "]";
     }
-
-    public static void add(ArrayList<Nematode> nematodes) {
-    }
-    
-
+        
 }
