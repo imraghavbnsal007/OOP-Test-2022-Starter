@@ -1,11 +1,25 @@
 package ie.tudublin;
 
-public class Nematode {
+import processing.core.PApplet;
+import processing.data.TableRow;
+
+public class Nematode extends PApplet{
     public String name;
     public float length;
     public boolean limbs;
     public String gender;
     public boolean eyes;
+
+    public Nematode(TableRow tr)
+    {
+        this(
+            tr.getString("Name"),
+            tr.getFloat("length"),
+            tr.getInt("limbs?") == 1 ? true : false,
+            tr.getString("gender"),
+            tr.getInt("eyes?") == 1 ? true : false
+        );
+    }
 
     public Nematode(String name, float length, boolean limbs, String gender, boolean eyes) {
         this.name = name;
