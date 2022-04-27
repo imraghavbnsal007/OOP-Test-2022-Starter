@@ -1,28 +1,24 @@
 package ie.tudublin;
 
-import processing.core.PApplet;
 import processing.data.TableRow;
 
-public class Nematode extends PApplet{
+public class Nematode {
     private String name;
     private int length;
     private boolean limbs;
     private String gender;
     private boolean eyes;
 
-    float cx = width/2;
-    float cy = height/2;
-    
     public Nematode(TableRow tr)
     {
-        this(
+        this( 
             tr.getString("name"), 
-            tr.getInt("length"),      
+            tr.getInt("length"),
             tr.getInt("limbs") == 1,
             tr.getString("gender"),
-            tr.getInt("eyes")== 1       
+            tr.getInt("eyes") == 1
         );
-    }//default constructor ends
+    }
 
     public Nematode(String name, int length, boolean limbs, String gender, boolean eyes) {
         this.name = name;
@@ -30,6 +26,12 @@ public class Nematode extends PApplet{
         this.limbs = limbs;
         this.gender = gender;
         this.eyes = eyes;
+    }
+
+    @Override
+    public String toString() {
+        return "Nematode [eyes=" + eyes + ", gender=" + gender + ", length=" + length + ", limbs=" + limbs + ", name="
+                + name + "]";
     }
 
     public String getName() {
@@ -72,10 +74,4 @@ public class Nematode extends PApplet{
         this.eyes = eyes;
     }
 
-    @Override
-    public String toString() {
-        return "Nematode [eyes=" + eyes + ", gender=" + gender + ", length=" + length + ", limbs=" + limbs + ", name="
-                + name + "]";
-    }
-        
 }

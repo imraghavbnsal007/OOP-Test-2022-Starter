@@ -22,13 +22,21 @@ public class NematodeVisualiser extends PApplet {
 	float Lborder = border * 3.0f;
 	Nematode PresentNem = null;
 	float RadiusCircle = 40;
+	int count = 0;
 
 	// changes the
 	public void keyPressed() {
 		if (keyCode == LEFT) {
-		}
+			background(0);
+			count = --count % nematodes.size();
 
+			stroke(map(count, 0, nematodes.size(), 0, 255), 255, 255);
+		}
 		if (keyCode == RIGHT) {
+			background(0);
+			count = ++count % nematodes.size();
+
+			stroke(map(count, 0, nematodes.size(), 0, 255), 255, 255);
 		}
 		if (key >= '0' && key <= '9') {
 			mode = key - '0';
@@ -76,13 +84,15 @@ public class NematodeVisualiser extends PApplet {
 	public void draw() {
 		drawArrow();
 		stroke(0, 125, 255);
-		strokeWeight(3);
+		strokeWeight(2);
 		noFill();
-		int halfW = 800 / 2;
-		int halfH = 800 / 2;
-		PresentNem = nematodes.get(0);
+		int halfW = width / 2;
+		int halfH = height / 2;
+		int offset = 0;
+		PresentNem = nematodes.get(count);
 		for (int i = 0; i < PresentNem.getLength(); i++) {
-			int offset = (int) (RadiusCircle * i);
+
+			offset = (int) (RadiusCircle * i);
 
 			if (PresentNem.getLength() % 2 == 1) {
 				circle(halfW, halfH - offset, RadiusCircle);
@@ -139,7 +149,6 @@ public class NematodeVisualiser extends PApplet {
 			textSize(55);
 			text(PresentNem.getName(), 290, 100);
 
-			
 		}
 	}
 
