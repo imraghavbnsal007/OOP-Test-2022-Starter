@@ -37,6 +37,13 @@ public class NematodeVisualiser extends PApplet
             nematodes.add(s);
         }
     }//end loading csv file function
+	void printNematodes()
+    {
+        for(Nematode s:nematodes)
+        {
+            System.out.println(s);
+        }
+    }
 
 
 	public void settings()
@@ -49,7 +56,8 @@ public class NematodeVisualiser extends PApplet
 		colorMode(HSB);
 		background(0);
 		smooth();	
-		loadNematodes();			
+		loadNematodes();	
+		printNematodes();		
 	}
 	
 
