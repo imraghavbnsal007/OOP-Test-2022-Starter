@@ -1,7 +1,10 @@
 package ie.tudublin;
 
 import java.util.ArrayList;
-
+import ddf.minim.AudioBuffer;
+import ddf.minim.AudioInput;
+import ddf.minim.AudioPlayer;
+import ddf.minim.Minim;
 import processing.core.PApplet;
 import processing.data.Table;
 import processing.data.TableRow;
@@ -9,12 +12,17 @@ import processing.data.TableRow;
 public class NematodeVisualiser extends PApplet
 {
 	ArrayList<Nematode> nematodes = new ArrayList<>();
+	Minim minim;
+    AudioPlayer ap;
+    AudioInput ai;
+    AudioBuffer ab;
 
+	int mode = 0;
 	float border = 10;
-	float borderRight = 800 - border*3.0f;
-	float borderLeft = border*3.0f;
-	Nematode currentNematode = null;
-	float circleRadius = 40;
+	float Rborder = 800 - border*3.0f;
+	float Lborder = border*3.0f;
+	Nematode PresentNem = null;
+	float RadiusCircle = 40;
 
 	//changes the 
 	public void keyPressed()
@@ -26,6 +34,17 @@ public class NematodeVisualiser extends PApplet
 		if (keyCode == RIGHT)
 		{
 		}
+		if (key >= '0' && key <= '9') {
+			mode = key - '0';
+		}
+		if (keyCode == ' ') {
+            if (ap.isPlaying()) {
+                ap.pause();
+            } else {
+                ap.rewind();
+                ap.play();
+            }
+        }
 	}
 
 	public void loadNematodes()
@@ -57,62 +76,71 @@ public class NematodeVisualiser extends PApplet
 		background(0);
 		smooth();	
 		loadNematodes();	
-		printNematodes();		
+		printNematodes();
+		minim = new Minim(this);
+        
+        ap = minim.loadFile("nucleya.mp3", 1024);
+        ap.play();		
 	}
 	
 
 	public void draw()
 	{	
 		drawArrow();
-		stroke(255);
-        strokeWeight(2);
+		stroke(0,125,255);
+        strokeWeight(3);
         noFill();    
         int halfW = 800/2;
         int halfH = 800/2;
-        currentNematode = nematodes.get(0);
-        for(int i = 0; i < currentNematode.getLength(); i++)
+        PresentNem = nematodes.get(0);
+        for(int i = 0; i < PresentNem.getLength(); i++)
         {
-            int offset = (int) (circleRadius * i);
+            int offset = (int) (RadiusCircle * i);
 
-            if(currentNematode.getLength() % 2 == 1)
+            if(PresentNem.getLength() % 2 == 1)
             {
-                circle(halfW, halfH - offset, circleRadius);
-                circle(halfW, halfH + offset, circleRadius);
+                circle(halfW, halfH - offset, RadiusCircle);
+                circle(halfW, halfH + offset, RadiusCircle);
 
                 // Limbs
                 // Top segment limbs
-                line(halfW + circleRadius/2, halfH - offset, halfW + circleRadius, halfH - offset);
-                line(halfW - circleRadius/2, halfH - offset, halfW - circleRadius, halfH - offset);
+                line(halfW + RadiusCircle/2, halfH - offset, halfW + RadiusCircle, halfH - offset);
+                line(halfW - RadiusCircle/2, halfH - offset, halfW - RadiusCircle, halfH - offset);
+				// line(halfW - RadiusCircle, halfH + RadiusCircle/2 - offset, halfW + RadiusCircle, halfH + RadiusCircle/2 - offset);
                 // Bottom segment limbs
-                line(halfW + circleRadius/2, halfH + offset, halfW + circleRadius, halfH + offset);
-                line(halfW - circleRadius/2, halfH + offset, halfW - circleRadius, halfH + offset);
+                line(halfW + RadiusCircle/2, halfH + offset, halfW + RadiusCircle, halfH + offset);
+                line(halfW - RadiusCircle/2, halfH + offset, halfW - RadiusCircle, halfH + offset);
             }
             else
             {
-                circle(halfW, halfH + circleRadius/2 - offset, circleRadius);
-                circle(halfW, halfH - circleRadius/2 + offset, circleRadius);
+                circle(halfW, halfH + RadiusCircle/2 - offset, RadiusCircle);
+                circle(halfW, halfH - RadiusCircle/2 + offset, RadiusCircle);
                 // Top limbs
-                line(halfW + circleRadius, halfH + circleRadius/2 - offset, halfW + circleRadius, halfH + circleRadius/2 - offset);
-                line(halfW - circleRadius, halfH + circleRadius/2 - offset, halfW - circleRadius, halfH + circleRadius/2 - offset);
+                line(halfW + RadiusCircle, halfH + RadiusCircle/2 - offset, halfW + RadiusCircle, halfH + RadiusCircle/2 - offset);
+                line(halfW - RadiusCircle, halfH + RadiusCircle/2 - offset, halfW - RadiusCircle, halfH + RadiusCircle/2 - offset);
                 // Bottom limbs
-                line(halfW + circleRadius, halfH + circleRadius/2 - offset, halfW + circleRadius, halfH + circleRadius/2 - offset);
-                line(halfW - circleRadius, halfH + circleRadius/2 - offset, halfW - circleRadius, halfH + circleRadius/2 - offset);
+                line(halfW + RadiusCircle, halfH + RadiusCircle/2 - offset, halfW + RadiusCircle, halfH + RadiusCircle/2 - offset);
+                line(halfW - RadiusCircle, halfH + RadiusCircle/2 - offset, halfW - RadiusCircle, halfH + RadiusCircle/2 - offset);
+				
             }
+			fill(random(255), 255, 255);
+        	textSize(55);
+        	text("NEMATODE", 250, 100);
         }
 	}
 
 	public void drawArrow(){
-		stroke(random(255),255,255);
+		stroke(0,155,250);
 		//arrows
 		//right arrow
-		line(borderRight, height/2, borderRight-90, height/2);
-		line(borderRight, height/2, borderRight-30, height/2 - 20);
-		line(borderRight, height/2, borderRight-30, height/2 - 20);
-		line(borderRight, height/2, borderRight-30, height/2 + 20);
+		line(Rborder, height/2, Rborder-90, height/2);
+		line(Rborder, height/2, Rborder-30, height/2 - 20);
+		line(Rborder, height/2, Rborder-30, height/2 - 20);
+		line(Rborder, height/2, Rborder-30, height/2 + 20);
 		
 		//arrow left
-		line(borderLeft, height/2, borderLeft+90, height/2);
-		line(borderLeft, height/2, borderLeft+30, height/2 - 20);
-		line(borderLeft, height/2, borderLeft+30, height/2 + 20);
+		line(Lborder, height/2, Lborder+90, height/2);
+		line(Lborder, height/2, Lborder+30, height/2 - 20);
+		line(Lborder, height/2, Lborder+30, height/2 + 20);
 	}
 }
